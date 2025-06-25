@@ -66,6 +66,18 @@ export default function ResultsPage({ result, onNewExam }: ResultsPageProps) {
     return AlertTriangle;
   };
 
+  const formatNumber = (value: number | string): string => {
+    if (typeof value === 'string') return value;
+    
+    // Si c'est un nombre entier, l'afficher sans décimale
+    if (Number.isInteger(value)) {
+      return value.toString();
+    }
+    
+    // Sinon, l'afficher avec une décimale
+    return value.toFixed(1);
+  };
+
   const ConfidenceIcon = getConfidenceIcon(result.confidence);
 
   return (
@@ -143,7 +155,7 @@ export default function ResultsPage({ result, onNewExam }: ResultsPageProps) {
                     <div key={index} className="flex justify-between items-center">
                       <span className="font-medium text-gray-700 print:text-sm">{index}:</span>
                       <span className="text-lg font-bold text-purple-600 print:text-base">
-                        {typeof valeur === 'number' ? valeur.toFixed(1) : valeur}
+                        {formatNumber(valeur)}
                       </span>
                     </div>
                   ))}
