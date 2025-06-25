@@ -23,9 +23,12 @@ function Tooltip({ content, children }: TooltipProps) {
     >
       {children}
       {isVisible && (
-        <div className="absolute z-50 w-80 p-3 text-sm text-white bg-gray-900 rounded-lg shadow-lg -top-2 left-full ml-2 transform -translate-y-full">
-          <div className="absolute top-full left-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-          {content}
+        <div className="absolute z-50 w-80 p-3 text-sm bg-white border border-gray-300 rounded-lg shadow-xl bottom-full left-0 mb-2 transform">
+          <div className="absolute top-full left-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
+          <div className="absolute top-full left-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-300 transform translate-y-px"></div>
+          <div className="text-gray-800 leading-relaxed">
+            {content}
+          </div>
         </div>
       )}
     </div>
@@ -194,7 +197,7 @@ export default function ResultsPage({ result, onNewExam }: ResultsPageProps) {
                   <li key={index} className="flex items-start">
                     <div className="flex-shrink-0 w-2 h-2 bg-green-400 rounded-full mt-2 mr-3"></div>
                     <Tooltip content={result.explications.recommandations[index] || "Explication non disponible"}>
-                      <span className="text-gray-700 cursor-help hover:text-green-700 transition-colors print:text-sm print:cursor-default">
+                      <span className="text-gray-700 cursor-help hover:text-green-700 transition-colors print:text-sm print:cursor-default border-b border-dotted border-green-300 hover:border-green-500">
                         {recommandation}
                       </span>
                     </Tooltip>
@@ -218,7 +221,7 @@ export default function ResultsPage({ result, onNewExam }: ResultsPageProps) {
                   <li key={index} className="flex items-start">
                     <div className="flex-shrink-0 w-2 h-2 bg-purple-400 rounded-full mt-2 mr-3"></div>
                     <Tooltip content={result.explications.examensComplementaires[index] || "Explication non disponible"}>
-                      <span className="text-gray-700 cursor-help hover:text-purple-700 transition-colors print:text-sm print:cursor-default">
+                      <span className="text-gray-700 cursor-help hover:text-purple-700 transition-colors print:text-sm print:cursor-default border-b border-dotted border-purple-300 hover:border-purple-500">
                         {examen}
                       </span>
                     </Tooltip>
@@ -242,7 +245,7 @@ export default function ResultsPage({ result, onNewExam }: ResultsPageProps) {
                   <li key={index} className="flex items-start">
                     <div className="flex-shrink-0 w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3"></div>
                     <Tooltip content={result.explications.traitements[index] || "Explication non disponible"}>
-                      <span className="text-gray-700 cursor-help hover:text-blue-700 transition-colors print:text-sm print:cursor-default">
+                      <span className="text-gray-700 cursor-help hover:text-blue-700 transition-colors print:text-sm print:cursor-default border-b border-dotted border-blue-300 hover:border-blue-500">
                         {traitement}
                       </span>
                     </Tooltip>
@@ -266,7 +269,7 @@ export default function ResultsPage({ result, onNewExam }: ResultsPageProps) {
                   <li key={index} className="flex items-start">
                     <div className="flex-shrink-0 w-2 h-2 bg-yellow-400 rounded-full mt-2 mr-3"></div>
                     <Tooltip content={result.explications.surveillance[index] || "Explication non disponible"}>
-                      <span className="text-gray-700 cursor-help hover:text-yellow-700 transition-colors print:text-sm print:cursor-default">
+                      <span className="text-gray-700 cursor-help hover:text-yellow-700 transition-colors print:text-sm print:cursor-default border-b border-dotted border-yellow-300 hover:border-yellow-500">
                         {surveillance}
                       </span>
                     </Tooltip>
@@ -291,7 +294,7 @@ export default function ResultsPage({ result, onNewExam }: ResultsPageProps) {
                 <li key={index} className="flex items-start">
                   <AlertTriangle className="flex-shrink-0 w-4 h-4 text-red-400 mt-1 mr-3" />
                   <Tooltip content={result.explications.pieges[index] || "Explication non disponible"}>
-                    <span className="text-gray-700 cursor-help hover:text-red-700 transition-colors print:text-sm print:cursor-default">
+                    <span className="text-gray-700 cursor-help hover:text-red-700 transition-colors print:text-sm print:cursor-default border-b border-dotted border-red-300 hover:border-red-500">
                       {piege}
                     </span>
                   </Tooltip>
