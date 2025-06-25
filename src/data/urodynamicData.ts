@@ -118,6 +118,14 @@ export interface DiagnosticResult {
   indexCalcules: {
     [key: string]: number;
   };
+  // Ajout des explications pour les tooltips
+  explications: {
+    recommandations: string[];
+    examensComplementaires: string[];
+    traitements: string[];
+    surveillance: string[];
+    pieges: string[];
+  };
 }
 
 // Symptômes disponibles (étendus)
@@ -220,10 +228,32 @@ export const TEMPLATES_EXAMENS = {
       antecedents: ['Maladie neurologique'],
       traitements: []
     }
+  },
+  'enfant_enuresie': {
+    nom: 'Enfant avec Énurésie',
+    description: 'Template pédiatrique pour énurésie nocturne',
+    defaultValues: {
+      age: 8,
+      sexe: 'M' as const,
+      symptomes: ['Énurésie nocturne', 'Urgenturies'],
+      antecedents: [],
+      traitements: []
+    }
+  },
+  'adolescent_dysurie': {
+    nom: 'Adolescent avec Dysurie',
+    description: 'Template pédiatrique pour troubles mictionnels',
+    defaultValues: {
+      age: 14,
+      sexe: 'F' as const,
+      symptomes: ['Dysurie', 'Pollakiurie diurne'],
+      antecedents: [],
+      traitements: []
+    }
   }
 };
 
-// Cas cliniques de démonstration (6 cas complets)
+// Cas cliniques de démonstration (12 cas complets incluant pédiatriques)
 export const CAS_CLINIQUES = [
   {
     id: 1,
@@ -710,6 +740,493 @@ export const CAS_CLINIQUES = [
       },
       residuPostMictionnel: 380
     }
+  },
+  // NOUVEAUX CAS CLINIQUES (6 cas supplémentaires dont 2 pédiatriques)
+  {
+    id: 7,
+    titre: 'Énurésie nocturne primaire (Pédiatrique)',
+    description: 'Garçon de 8 ans, énurésie nocturne résistante',
+    donnee: {
+      age: 8,
+      sexe: 'M' as const,
+      symptomes: ['Énurésie nocturne', 'Urgenturies', 'Pollakiurie diurne'],
+      antecedents: [],
+      traitements: [],
+      debitMetrie: {
+        qMax: 12,
+        qMoyen: 8,
+        volumeVide: 150,
+        tempsVidange: 20,
+        formeDebitmetrie: 'normale' as const,
+        tempsLatence: 3,
+        tempsJusquQmax: 8
+      },
+      cystometrie: {
+        capaciteVesicale: 180,
+        pressionDetrusor: 35,
+        pressionAbdominale: 10,
+        pressionVesicale: 45,
+        compliance: 12,
+        contractions: 'instables' as const,
+        sensibilite: 'diminuee' as const,
+        premierBesoin: 80,
+        besoinNormal: 120,
+        capaciteMaximale: 180,
+        vitesseRemplissage: 30,
+        pressionFuite: 0
+      },
+      profilPression: {
+        pressionUretrale: 45,
+        longueurUretrale: 20,
+        pressionClotureUretrale: 35,
+        longueurFonctionnelle: 18,
+        pressionTransmission: 75,
+        profilDynamique: 'normal' as const
+      },
+      emg: {
+        activiteBasale: 'normale' as const,
+        recrutementVolontaire: 'normal' as const,
+        reflexeSphincter: 'present' as const,
+        synergieDetrusorSphincter: 'normale' as const,
+        fatigabilite: 'normale' as const
+      },
+      etudePressionDebit: {
+        pressionDetrusorQmax: 25,
+        indexObstruction: 1,
+        indexContractilite: 85,
+        resistanceUretrale: 1.2,
+        conductanceUretrale: 18
+      },
+      testsProvocation: {
+        testToux: 'negatif' as const,
+        testValsalva: 'negatif' as const,
+        testStressUretral: 0,
+        pressionFuiteAbdominale: 0
+      },
+      cystometrieRemplissage: {
+        vitesseLente: {
+          compliance: 15,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        },
+        vitesseRapide: {
+          compliance: 10,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        },
+        vitessePhysiologique: {
+          compliance: 12,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        }
+      },
+      residuPostMictionnel: 10
+    }
+  },
+  {
+    id: 8,
+    titre: 'Vessie hyperactive pédiatrique (Pédiatrique)',
+    description: 'Fille de 12 ans, urgenturies et fuites diurnes',
+    donnee: {
+      age: 12,
+      sexe: 'F' as const,
+      symptomes: ['Urgenturies', 'Incontinence d\'urgence', 'Pollakiurie diurne'],
+      antecedents: ['Infection urinaire récidivante'],
+      traitements: [],
+      debitMetrie: {
+        qMax: 15,
+        qMoyen: 10,
+        volumeVide: 200,
+        tempsVidange: 22,
+        formeDebitmetrie: 'normale' as const,
+        tempsLatence: 4,
+        tempsJusquQmax: 9
+      },
+      cystometrie: {
+        capaciteVesicale: 220,
+        pressionDetrusor: 42,
+        pressionAbdominale: 12,
+        pressionVesicale: 54,
+        compliance: 8,
+        contractions: 'instables' as const,
+        sensibilite: 'augmentee' as const,
+        premierBesoin: 90,
+        besoinNormal: 140,
+        capaciteMaximale: 220,
+        vitesseRemplissage: 40,
+        pressionFuite: 0
+      },
+      profilPression: {
+        pressionUretrale: 50,
+        longueurUretrale: 22,
+        pressionClotureUretrale: 38,
+        longueurFonctionnelle: 20,
+        pressionTransmission: 80,
+        profilDynamique: 'normal' as const
+      },
+      emg: {
+        activiteBasale: 'normale' as const,
+        recrutementVolontaire: 'normal' as const,
+        reflexeSphincter: 'present' as const,
+        synergieDetrusorSphincter: 'normale' as const,
+        fatigabilite: 'normale' as const
+      },
+      etudePressionDebit: {
+        pressionDetrusorQmax: 32,
+        indexObstruction: 2,
+        indexContractilite: 107,
+        resistanceUretrale: 1.0,
+        conductanceUretrale: 20
+      },
+      testsProvocation: {
+        testToux: 'negatif' as const,
+        testValsalva: 'negatif' as const,
+        testStressUretral: 0,
+        pressionFuiteAbdominale: 0
+      },
+      cystometrieRemplissage: {
+        vitesseLente: {
+          compliance: 12,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        },
+        vitesseRapide: {
+          compliance: 6,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        },
+        vitessePhysiologique: {
+          compliance: 8,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        }
+      },
+      residuPostMictionnel: 15
+    }
+  },
+  {
+    id: 9,
+    titre: 'Sténose urétrale post-traumatique',
+    description: 'Homme de 35 ans, dysurie après accident',
+    donnee: {
+      age: 35,
+      sexe: 'M' as const,
+      symptomes: ['Dysurie', 'Jet faible', 'Jet dévié', 'Sensation de vidange incomplète'],
+      antecedents: ['Fracture du bassin'],
+      traitements: [],
+      debitMetrie: {
+        qMax: 5,
+        qMoyen: 3,
+        volumeVide: 200,
+        tempsVidange: 80,
+        formeDebitmetrie: 'en_plateau' as const,
+        tempsLatence: 20,
+        tempsJusquQmax: 40
+      },
+      cystometrie: {
+        capaciteVesicale: 420,
+        pressionDetrusor: 95,
+        pressionAbdominale: 18,
+        pressionVesicale: 113,
+        compliance: 18,
+        contractions: 'stables' as const,
+        sensibilite: 'normale' as const,
+        premierBesoin: 160,
+        besoinNormal: 280,
+        capaciteMaximale: 420,
+        vitesseRemplissage: 50,
+        pressionFuite: 0
+      },
+      profilPression: {
+        pressionUretrale: 120,
+        longueurUretrale: 30,
+        pressionClotureUretrale: 102,
+        longueurFonctionnelle: 15,
+        pressionTransmission: 60,
+        profilDynamique: 'altere' as const
+      },
+      emg: {
+        activiteBasale: 'normale' as const,
+        recrutementVolontaire: 'normal' as const,
+        reflexeSphincter: 'present' as const,
+        synergieDetrusorSphincter: 'normale' as const,
+        fatigabilite: 'normale' as const
+      },
+      etudePressionDebit: {
+        pressionDetrusorQmax: 85,
+        indexObstruction: 75,
+        indexContractilite: 110,
+        resistanceUretrale: 8.5,
+        conductanceUretrale: 3
+      },
+      testsProvocation: {
+        testToux: 'negatif' as const,
+        testValsalva: 'negatif' as const,
+        testStressUretral: 0,
+        pressionFuiteAbdominale: 0
+      },
+      cystometrieRemplissage: {
+        vitesseLente: {
+          compliance: 20,
+          contractions: 'absentes' as const,
+          sensibilite: 'normale' as const
+        },
+        vitesseRapide: {
+          compliance: 16,
+          contractions: 'absentes' as const,
+          sensibilite: 'normale' as const
+        },
+        vitessePhysiologique: {
+          compliance: 18,
+          contractions: 'absentes' as const,
+          sensibilite: 'normale' as const
+        }
+      },
+      residuPostMictionnel: 180
+    }
+  },
+  {
+    id: 10,
+    titre: 'Vessie de lutte post-radiothérapie',
+    description: 'Femme de 62 ans, antécédent de cancer du col',
+    donnee: {
+      age: 62,
+      sexe: 'F' as const,
+      symptomes: ['Urgenturies', 'Pollakiurie diurne', 'Nycturie', 'Douleurs pelviennes'],
+      antecedents: ['Radiothérapie pelvienne'],
+      traitements: ['Anticholinergiques'],
+      debitMetrie: {
+        qMax: 14,
+        qMoyen: 9,
+        volumeVide: 180,
+        tempsVidange: 25,
+        formeDebitmetrie: 'normale' as const,
+        tempsLatence: 8,
+        tempsJusquQmax: 12
+      },
+      cystometrie: {
+        capaciteVesicale: 200,
+        pressionDetrusor: 55,
+        pressionAbdominale: 16,
+        pressionVesicale: 71,
+        compliance: 4,
+        contractions: 'instables' as const,
+        sensibilite: 'augmentee' as const,
+        premierBesoin: 60,
+        besoinNormal: 120,
+        capaciteMaximale: 200,
+        vitesseRemplissage: 30,
+        pressionFuite: 0
+      },
+      profilPression: {
+        pressionUretrale: 55,
+        longueurUretrale: 26,
+        pressionClotureUretrale: 39,
+        longueurFonctionnelle: 22,
+        pressionTransmission: 70,
+        profilDynamique: 'altere' as const
+      },
+      emg: {
+        activiteBasale: 'augmentee' as const,
+        recrutementVolontaire: 'altere' as const,
+        reflexeSphincter: 'present' as const,
+        synergieDetrusorSphincter: 'normale' as const,
+        fatigabilite: 'augmentee' as const
+      },
+      etudePressionDebit: {
+        pressionDetrusorQmax: 45,
+        indexObstruction: 17,
+        indexContractilite: 115,
+        resistanceUretrale: 1.8,
+        conductanceUretrale: 16
+      },
+      testsProvocation: {
+        testToux: 'negatif' as const,
+        testValsalva: 'negatif' as const,
+        testStressUretral: 0,
+        pressionFuiteAbdominale: 0
+      },
+      cystometrieRemplissage: {
+        vitesseLente: {
+          compliance: 6,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        },
+        vitesseRapide: {
+          compliance: 2,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        },
+        vitessePhysiologique: {
+          compliance: 4,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        }
+      },
+      residuPostMictionnel: 40
+    }
+  },
+  {
+    id: 11,
+    titre: 'Insuffisance sphinctérienne intrinsèque',
+    description: 'Femme de 58 ans, incontinence sévère post-chirurgie',
+    donnee: {
+      age: 58,
+      sexe: 'F' as const,
+      symptomes: ['Incontinence d\'effort', 'Incontinence coïtale'],
+      antecedents: ['Chirurgie anti-incontinence', 'Hystérectomie'],
+      traitements: [],
+      debitMetrie: {
+        qMax: 25,
+        qMoyen: 18,
+        volumeVide: 320,
+        tempsVidange: 18,
+        formeDebitmetrie: 'normale' as const,
+        tempsLatence: 3,
+        tempsJusquQmax: 6
+      },
+      cystometrie: {
+        capaciteVesicale: 380,
+        pressionDetrusor: 22,
+        pressionAbdominale: 14,
+        pressionVesicale: 36,
+        compliance: 22,
+        contractions: 'stables' as const,
+        sensibilite: 'normale' as const,
+        premierBesoin: 140,
+        besoinNormal: 240,
+        capaciteMaximale: 380,
+        vitesseRemplissage: 50,
+        pressionFuite: 0
+      },
+      profilPression: {
+        pressionUretrale: 25,
+        longueurUretrale: 22,
+        pressionClotureUretrale: 11,
+        longueurFonctionnelle: 15,
+        pressionTransmission: 25,
+        profilDynamique: 'altere' as const
+      },
+      emg: {
+        activiteBasale: 'diminuee' as const,
+        recrutementVolontaire: 'altere' as const,
+        reflexeSphincter: 'present' as const,
+        synergieDetrusorSphincter: 'normale' as const,
+        fatigabilite: 'augmentee' as const
+      },
+      etudePressionDebit: {
+        pressionDetrusorQmax: 18,
+        indexObstruction: -32,
+        indexContractilite: 143,
+        resistanceUretrale: 0.2,
+        conductanceUretrale: 35
+      },
+      testsProvocation: {
+        testToux: 'positif_fort' as const,
+        testValsalva: 'positif_fort' as const,
+        testStressUretral: 15,
+        pressionFuiteAbdominale: 20
+      },
+      cystometrieRemplissage: {
+        vitesseLente: {
+          compliance: 24,
+          contractions: 'absentes' as const,
+          sensibilite: 'normale' as const
+        },
+        vitesseRapide: {
+          compliance: 20,
+          contractions: 'absentes' as const,
+          sensibilite: 'normale' as const
+        },
+        vitessePhysiologique: {
+          compliance: 22,
+          contractions: 'absentes' as const,
+          sensibilite: 'normale' as const
+        }
+      },
+      residuPostMictionnel: 8
+    }
+  },
+  {
+    id: 12,
+    titre: 'Syndrome douloureux vésical',
+    description: 'Femme de 42 ans, douleurs pelviennes et pollakiurie',
+    donnee: {
+      age: 42,
+      sexe: 'F' as const,
+      symptomes: ['Douleurs pelviennes', 'Pollakiurie diurne', 'Nycturie', 'Urgenturies', 'Douleurs pendant la miction'],
+      antecedents: [],
+      traitements: ['Antispasmodiques'],
+      debitMetrie: {
+        qMax: 20,
+        qMoyen: 14,
+        volumeVide: 150,
+        tempsVidange: 12,
+        formeDebitmetrie: 'normale' as const,
+        tempsLatence: 6,
+        tempsJusquQmax: 8
+      },
+      cystometrie: {
+        capaciteVesicale: 180,
+        pressionDetrusor: 35,
+        pressionAbdominale: 15,
+        pressionVesicale: 50,
+        compliance: 8,
+        contractions: 'instables' as const,
+        sensibilite: 'augmentee' as const,
+        premierBesoin: 50,
+        besoinNormal: 100,
+        capaciteMaximale: 180,
+        vitesseRemplissage: 30,
+        pressionFuite: 0
+      },
+      profilPression: {
+        pressionUretrale: 58,
+        longueurUretrale: 26,
+        pressionClotureUretrale: 43,
+        longueurFonctionnelle: 24,
+        pressionTransmission: 75,
+        profilDynamique: 'normal' as const
+      },
+      emg: {
+        activiteBasale: 'augmentee' as const,
+        recrutementVolontaire: 'normal' as const,
+        reflexeSphincter: 'present' as const,
+        synergieDetrusorSphincter: 'normale' as const,
+        fatigabilite: 'normale' as const
+      },
+      etudePressionDebit: {
+        pressionDetrusorQmax: 28,
+        indexObstruction: -12,
+        indexContractilite: 128,
+        resistanceUretrale: 0.7,
+        conductanceUretrale: 22
+      },
+      testsProvocation: {
+        testToux: 'negatif' as const,
+        testValsalva: 'negatif' as const,
+        testStressUretral: 0,
+        pressionFuiteAbdominale: 0
+      },
+      cystometrieRemplissage: {
+        vitesseLente: {
+          compliance: 10,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        },
+        vitesseRapide: {
+          compliance: 6,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        },
+        vitessePhysiologique: {
+          compliance: 8,
+          contractions: 'presentes' as const,
+          sensibilite: 'alteree' as const
+        }
+      },
+      residuPostMictionnel: 20
+    }
   }
 ];
 
@@ -792,6 +1309,37 @@ export function analyserUrodynamique(donnee: PatientData): DiagnosticResult {
       indexCalcules: {
         'BOO Index': donneeComplete.parametresCalcules!.indexObstructionBOO,
         'BCI Index': donneeComplete.parametresCalcules!.indexContractiliteBCI
+      },
+      explications: {
+        recommandations: [
+          'Le nomogramme de Schafer permet de différencier obstruction vraie et hypocontractilité',
+          'L\'identification de la cause guide le traitement spécifique',
+          'L\'évaluation du haut appareil détecte les complications rénales',
+          'L\'index BCI évalue la réserve contractile du détrusor'
+        ],
+        examensComplementaires: [
+          'Mesure du volume prostatique et recherche de nodules',
+          'Détection d\'une dilatation des voies urinaires',
+          'Visualisation directe de l\'urètre et recherche de sténose',
+          'Créatinine et clairance pour évaluer la fonction rénale'
+        ],
+        traitements: [
+          'Les alpha-bloquants relaxent le col vésical et l\'urètre prostatique',
+          'La résection enlève le tissu prostatique obstructif',
+          'Le suivi du RPM évalue l\'efficacité du traitement',
+          'Les sondages évitent la rétention et protègent les reins'
+        ],
+        surveillance: [
+          'Objectiver l\'amélioration du débit urinaire',
+          'Dépister précocement une insuffisance rénale',
+          'Évaluer l\'impact sur la qualité de vie',
+          'Surveiller l\'efficacité de la vidange vésicale'
+        ],
+        pieges: [
+          'Une vessie hypocontractile peut mimer une obstruction',
+          'Les femmes peuvent avoir des obstructions cervico-urétrales',
+          'La dyssynergie nécessite un traitement spécifique différent'
+        ]
       }
     });
   }
@@ -843,6 +1391,38 @@ export function analyserUrodynamique(donnee: PatientData): DiagnosticResult {
       indexCalcules: {
         'Compliance': donnee.cystometrie.compliance,
         'Pression détrusor max': donnee.cystometrie.pressionDetrusor
+      },
+      explications: {
+        recommandations: [
+          'Les contractions non inhibées définissent l\'hyperactivité détrusorienne',
+          'Une compliance basse augmente le risque de complications rénales',
+          'La dyssynergie complique le traitement et nécessite des sondages',
+          'L\'évaluation de la qualité de vie guide l\'intensité du traitement'
+        ],
+        examensComplementaires: [
+          'L\'IRM recherche des lésions médullaires causales',
+          'L\'EMG détecte une dyssynergie vésico-sphinctérienne',
+          'L\'échographie mesure le résidu post-mictionnel',
+          'La vidéo-urodynamique visualise la dyssynergie'
+        ],
+        traitements: [
+          'La rééducation améliore le contrôle volontaire',
+          'Les anticholinergiques réduisent les contractions involontaires',
+          'La toxine botulique paralyse temporairement le détrusor',
+          'La neuromodulation module les réflexes vésicaux',
+          'Les sondages évitent la rétention en cas de dyssynergie'
+        ],
+        surveillance: [
+          'Le calendrier objective l\'amélioration des symptômes',
+          'Surveillance de la sécheresse buccale, constipation',
+          'Contrôle de l\'efficacité et de la durée d\'action',
+          'Prévention de l\'insuffisance rénale'
+        ],
+        pieges: [
+          'Une infection peut mimer une hyperactivité',
+          'Une vessie de lutte a une cause obstructive à traiter',
+          'La dyssynergie peut être masquée par l\'hyperactivité'
+        ]
       }
     });
   }
@@ -892,6 +1472,37 @@ export function analyserUrodynamique(donnee: PatientData): DiagnosticResult {
       indexCalcules: {
         'Pression clôture urétrale': donnee.profilPression.pressionClotureUretrale,
         'Pression fuite abdominale': donnee.testsProvocation.pressionFuiteAbdominale
+      },
+      explications: {
+        recommandations: [
+          'Le pad-test quantifie objectivement les pertes urinaires',
+          'La pression de clôture urétrale évalue la sévérité',
+          'Le prolapsus peut aggraver l\'incontinence',
+          'La transmission évalue la qualité du support urétral'
+        ],
+        examensComplementaires: [
+          'Visualise la mobilité urétrale et cervicale',
+          'Recherche un reflux vésico-urétéral',
+          'Quantifie le degré de prolapsus',
+          'Analyse fine de l\'anatomie pelvienne'
+        ],
+        traitements: [
+          'Renforce les muscles du plancher pelvien',
+          'Soutient l\'urètre moyen lors des efforts',
+          'Remplace la fonction sphinctérienne défaillante',
+          'Augmente la résistance urétrale par comblement'
+        ],
+        surveillance: [
+          'Mesure objective de l\'amélioration',
+          'Évalue l\'impact sur la qualité de vie',
+          'Détecte érosion, infection, obstruction',
+          'Confirme la persistance de l\'efficacité'
+        ],
+        pieges: [
+          'L\'hyperactivité peut persister après chirurgie',
+          'Les bandelettes peuvent créer une obstruction',
+          'La composante d\'urgence peut être sous-estimée'
+        ]
       }
     });
   }
@@ -935,6 +1546,37 @@ export function analyserUrodynamique(donnee: PatientData): DiagnosticResult {
       indexCalcules: {
         'Pression détrusor max': donnee.cystometrie.pressionDetrusor,
         'Résidu post-mictionnel': donnee.residuPostMictionnel
+      },
+      explications: {
+        recommandations: [
+          'La vidéo-urodynamique visualise la dyssynergie',
+          'Identifier la cause guide le pronostic',
+          'Les hautes pressions menacent la fonction rénale',
+          'La pression élevée confirme la dyssynergie'
+        ],
+        examensComplementaires: [
+          'Recherche de lésions médullaires causales',
+          'Détecte une dilatation des voies urinaires',
+          'Élimine une obstruction anatomique associée',
+          'Bilan étiologique complet'
+        ],
+        traitements: [
+          'Évitent la rétention et protègent les reins',
+          'Relaxent le col vésical',
+          'Paralysent temporairement le sphincter externe',
+          'Section du sphincter externe (irréversible)'
+        ],
+        surveillance: [
+          'Dépistage précoce de l\'insuffisance rénale',
+          'Surveillance de la dilatation pyélocalicielle',
+          'Contrôle de l\'efficacité du traitement',
+          'Prévention des pyélonéphrites'
+        ],
+        pieges: [
+          'La dyssynergie peut rapidement altérer la fonction rénale',
+          'La pseudodyssynergie se corrige par apprentissage',
+          'Une sténose peut coexister avec la dyssynergie'
+        ]
       }
     });
   }
@@ -983,6 +1625,37 @@ export function analyserUrodynamique(donnee: PatientData): DiagnosticResult {
       indexCalcules: {
         'BCI Index': donneeComplete.parametresCalcules!.indexContractiliteBCI,
         'Efficacité vidange (%)': donneeComplete.parametresCalcules!.efficaciteVidange
+      },
+      explications: {
+        recommandations: [
+          'Diabète, médicaments, lésions neurologiques',
+          'Mesurer le résidu post-mictionnel',
+          'Éliminer une cause obstructive traitable',
+          'Calculer le pourcentage de vidange'
+        ],
+        examensComplementaires: [
+          'Recherche de neuropathie périphérique',
+          'Évalue l\'innervation du plancher pelvien',
+          'Recherche de lésions médullaires',
+          'Arrêt des médicaments anticholinergiques'
+        ],
+        traitements: [
+          'Apprentissage de la vidange assistée',
+          'Traitement étiologique si possible',
+          'Évite la rétention et les infections',
+          'Stimulation électrique du détrusor'
+        ],
+        surveillance: [
+          'Contrôle de l\'efficacité de la vidange',
+          'Prévention des infections sur résidu',
+          'Dépistage de l\'insuffisance rénale',
+          'Maintien de l\'indépendance fonctionnelle'
+        ],
+        pieges: [
+          'Une obstruction peut coexister',
+          'La décompensation peut être irréversible',
+          'Médicaments anticholinergiques, opiacés'
+        ]
       }
     });
   }
@@ -1027,8 +1700,115 @@ export function analyserUrodynamique(donnee: PatientData): DiagnosticResult {
       indexCalcules: {
         'Pression clôture': donnee.profilPression.pressionClotureUretrale,
         'Contractions détrusor': donnee.cystometrie.contractions === 'instables' ? 1 : 0
+      },
+      explications: {
+        recommandations: [
+          'Questionnaires UDI-6, IIQ-7 pour hiérarchiser',
+          'Traitement de la gêne principale en premier',
+          'Analyse complète des deux composantes',
+          'Pad-test et calendrier mictionnel'
+        ],
+        examensComplementaires: [
+          'Quantification des fuites d\'effort',
+          'Analyse de la fréquence et des urgenturies',
+          'Évaluation de la mobilité urétrale',
+          'Impact sur la qualité de vie'
+        ],
+        traitements: [
+          'Renforcement musculaire et contrôle vésical',
+          'Anticholinergiques pour l\'hyperactivité',
+          'Chirurgie après stabilisation de la vessie',
+          'Adaptation selon la réponse thérapeutique'
+        ],
+        surveillance: [
+          'Évaluation de chaque composante séparément',
+          'Sécheresse buccale, constipation',
+          'Modification des symptômes après traitement',
+          'Satisfaction globale du traitement'
+        ],
+        pieges: [
+          'L\'hyperactivité peut s\'aggraver après chirurgie',
+          'Le traitement d\'une composante peut révéler l\'autre',
+          'Nécessite une approche multimodale'
+        ]
       }
     });
+  }
+  
+  // Cas pédiatriques spécifiques
+  if (donnee.age < 16) {
+    if (donnee.symptomes.includes('Énurésie nocturne')) {
+      resultats.push({
+        diagnostic: 'Énurésie nocturne primaire',
+        confidence: 0.88,
+        recommandations: [
+          'Évaluer la capacité vésicale fonctionnelle',
+          'Rechercher une hyperactivité détrusorienne',
+          'Éliminer une cause organique',
+          'Évaluer le contexte psycho-social'
+        ],
+        examensComplementaires: [
+          'Échographie rénale et vésicale',
+          'ECBU et uroculture',
+          'Calendrier mictionnel pédiatrique',
+          'Bilan psychologique si nécessaire'
+        ],
+        traitements: [
+          'Mesures comportementales et hygiéno-diététiques',
+          'Alarme nocturne (première intention)',
+          'Desmopressine si échec de l\'alarme',
+          'Anticholinergiques si hyperactivité associée'
+        ],
+        surveillance: [
+          'Évaluation mensuelle de la réponse',
+          'Surveillance de la croissance',
+          'Adaptation du traitement selon l\'âge',
+          'Soutien psychologique de l\'enfant et famille'
+        ],
+        pieges: [
+          'Ne pas débuter le traitement avant 6 ans',
+          'Éliminer une constipation associée',
+          'Attention aux troubles psychologiques secondaires'
+        ],
+        nomogrammes: {},
+        alertesCritiques: [],
+        indexCalcules: {
+          'Capacité vésicale': donnee.cystometrie.capaciteVesicale,
+          'Âge': donnee.age
+        },
+        explications: {
+          recommandations: [
+            'Capacité attendue = (âge + 1) × 30 ml',
+            'Contractions non inhibées fréquentes',
+            'Éliminer malformations, infections',
+            'Impact sur l\'estime de soi'
+          ],
+          examensComplementaires: [
+            'Dépistage de malformations',
+            'Élimination d\'une infection',
+            'Évaluation des habitudes mictionnelles',
+            'Retentissement psychologique'
+          ],
+          traitements: [
+            'Restriction hydrique vespérale, mictions programmées',
+            'Conditionnement par réveil au début de miction',
+            'Hormone antidiurétique de synthèse',
+            'Réduction des contractions vésicales'
+          ],
+          surveillance: [
+            'Nombre de nuits sèches par semaine',
+            'Courbe de croissance normale',
+            'Adaptation posologique selon maturation',
+            'Prévention de l\'isolement social'
+          ],
+          pieges: [
+            'Maturation vésicale incomplète avant 6 ans',
+            'La constipation aggrave l\'énurésie',
+            'Éviter la culpabilisation de l\'enfant'
+          ]
+        }
+      });
+    }
   }
   
   // Si aucun diagnostic spécifique, analyser les valeurs normales
@@ -1067,7 +1847,38 @@ export function analyserUrodynamique(donnee: PatientData): DiagnosticResult {
       ],
       nomogrammes: {},
       alertesCritiques: [],
-      indexCalcules: {}
+      indexCalcules: {},
+      explications: {
+        recommandations: [
+          'Les symptômes peuvent exister malgré un bilan normal',
+          'Autres examens selon la clinique',
+          'Surveillance de l\'évolution',
+          'Dysfonctions non permanentes'
+        ],
+        examensComplementaires: [
+          'Analyse détaillée des habitudes',
+          'Quantification objective des fuites',
+          'Exploration endoscopique',
+          'Bilan morphologique'
+        ],
+        traitements: [
+          'Modification des habitudes de vie',
+          'Techniques de contrôle vésical',
+          'Suivi régulier sans traitement',
+          'Traitement selon les symptômes'
+        ],
+        surveillance: [
+          'Évolution de la symptomatologie',
+          'Répéter si aggravation',
+          'Impact sur la vie quotidienne',
+          'Adaptation selon l\'évolution'
+        ],
+        pieges: [
+          'Symptômes réels malgré bilan normal',
+          'Dysfonctions par intermittence',
+          'Composante psychosomatique possible'
+        ]
+      }
     });
   }
   
@@ -1111,7 +1922,7 @@ export const VALEURS_REFERENCE = {
   emg: {
     activiteBasale: 'Activité tonique continue normale',
     recrutement: 'Recrutement progressif et complet',
-    synergie: 'Relaxation sphinctérienne pendant la miction'
+    synergie: 'Relaxation sphinctér ienne pendant la miction'
   },
   indexCalcules: {
     BOO: { normal: '<20', douteux: '20-40', obstruction: '>40' },

@@ -96,15 +96,15 @@ export default function HomePage({ onStartExam }: HomePageProps) {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">92%</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">95%</div>
               <div className="text-gray-600">Précision diagnostique</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-green-600 mb-2">25+</div>
+              <div className="text-4xl font-bold text-green-600 mb-2">35+</div>
               <div className="text-gray-600">Paramètres analysés</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-purple-600 mb-2">6</div>
+              <div className="text-4xl font-bold text-purple-600 mb-2">12</div>
               <div className="text-gray-600">Cas cliniques intégrés</div>
             </div>
           </div>

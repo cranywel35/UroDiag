@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PatientData, SYMPTOMES, ANTECEDENTS, TRAITEMENTS, TEMPLATES_EXAMENS } from '../data/urodynamicData';
-import { User, Activity, BarChart3, Target, Zap, TestTube, Save, RotateCcw, FileText, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react';
+import { User, Activity, BarChart3, Target, Zap, TestTube, RotateCcw, FileText, AlertCircle } from 'lucide-react';
 
 interface ExamFormProps {
   onAnalyze: (data: PatientData) => void;
@@ -746,22 +746,13 @@ export default function ExamForm({ onAnalyze }: ExamFormProps) {
               Réinitialiser
             </button>
 
-            <div className="flex space-x-4">
-              <button
-                type="button"
-                className="inline-flex items-center px-6 py-3 border border-blue-300 text-base font-medium rounded-md text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors"
-              >
-                <Save className="w-4 h-4 mr-2" />
-                Sauvegarder
-              </button>
-              <button
-                type="submit"
-                className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-              >
-                <FileText className="w-4 h-4 mr-2" />
-                Analyser l'Examen
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              Analyser l'Examen
+            </button>
           </div>
         </form>
       </div>
