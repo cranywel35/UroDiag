@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { DiagnosticResult } from '../data/urodynamicData';
-import { AlertCircle, CheckCircle, FileText, TrendingUp, Users, AlertTriangle, Calculator, Target, Info, MousePointer } from 'lucide-react';
+import { AlertCircle, CheckCircle, FileText, TrendingUp, Users, AlertTriangle, Calculator, Target, Info, MousePointer, BarChart3, Activity } from 'lucide-react';
+import FlowChart from './Charts/FlowChart';
+import PressureFlowChart from './Charts/PressureFlowChart';
+import NomogramChart from './Charts/NomogramChart';
+import NormalValuesComparison from './Charts/NormalValuesComparison';
 
 interface ResultsPageProps {
   result: DiagnosticResult | null;
@@ -36,6 +40,8 @@ function Tooltip({ content, children }: TooltipProps) {
 }
 
 export default function ResultsPage({ result, onNewExam }: ResultsPageProps) {
+  const [activeChartTab, setActiveChartTab] = useState('flow');
+
   if (!result) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -80,14 +86,21 @@ export default function ResultsPage({ result, onNewExam }: ResultsPageProps) {
 
   const ConfidenceIcon = getConfidenceIcon(result.confidence);
 
+  const chartTabs = [
+    { id: 'flow', label: 'Débitmétrie', icon: BarChart3 },
+    { id: 'pressure', label: 'Pression-Débit', icon: Activity },
+    { id: 'nomogram', label: 'Nomogrammes', icon: Target },
+    { id: 'comparison', label: 'Valeurs Normales', icon: Calculator }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 print:bg-white print:py-4">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 print:px-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 print:px-2">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-6 print:shadow-none print:border print:border-gray-300">
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 print:bg-blue-600">
             <h1 className="text-2xl font-bold text-white print:text-xl">Rapport d'Analyse Urodynamique Complète</h1>
-            <p className="text-blue-100 mt-1 print:text-blue-200">Résultats détaillés avec nomogrammes et index calculés</p>
+            <p className="text-blue-100 mt-1 print:text-blue-200">Résultats détaillés avec graphiques et nomogrammes interactifs</p>
           </div>
         </div>
 
@@ -135,6 +148,46 @@ export default function ResultsPage({ result, onNewExam }: ResultsPageProps) {
             <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded print:border print:border-blue-400">
               <h3 className="text-lg font-medium text-blue-900 print:text-base">{result.diagnostic}</h3>
             </div>
+          </div>
+        </div>
+
+        {/* Graphiques et Analyses */}
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-6 print:shadow-none print:border print:border-gray-300">
+          <div className="border-b border-gray-200 print:hidden">
+            <nav className="flex space-x-8 px-6">
+              {chartTabs.map((tab) => {
+                const Icon = tab.icon;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveChartTab(tab.id)}
+                    className={`flex items-center py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                      activeChartTab === tab.id
+                        ? 'border-blue-500 text-blue-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 mr-2" />
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div className="p-6 print:p-4">
+            {activeChartTab === 'flow' && result.patientData && (
+              <FlowChart data={result.patientData} />
+            )}
+            {activeChartTab === 'pressure' && result.patientData && (
+              <PressureFlowChart data={result.patientData} />
+            )}
+            {activeChartTab === 'nomogram' && result.patientData && (
+              <NomogramChart data={result.patientData} />
+            )}
+            {activeChartTab === 'comparison' && result.patientData && (
+              <NormalValuesComparison data={result.patientData} />
+            )}
           </div>
         </div>
 
